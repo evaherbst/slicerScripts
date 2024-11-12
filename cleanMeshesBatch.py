@@ -23,6 +23,9 @@ def clean(targetNameContains):
             continue
 
         print ("found model called " + model.GetName())
+        
+        #TODO note that the clean function from surface toolbox does not get rid of certain non manifold parts of the mesh
+        # in future will try to implement more thorough cleaning for FE meshes similar to that done in the 3D Print Add On in Blender
         logic.clean(
             inputModel=model,
             outputModel=model
