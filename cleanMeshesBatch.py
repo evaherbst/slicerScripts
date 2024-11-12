@@ -22,14 +22,22 @@ def clean(targetNameContains):
         if targetNameContains not in model.GetName():
             continue
 
-
-        # Get the model node
-        model = slicer.mrmlScene.GetNthNodeByClass(i, 'vtkMRMLModelNode')
+        print ("found model called " + model.GetName())
         logic.clean(
             inputModel=model,
             outputModel=model
         )
+         
+        # update normals
+        logic.computeNormals(
+            inputModel=model, 
+            outputModel=model, 
+            autoOrient=True, 
+            flip=False, 
+            split=False, 
+            splitAngle=30.0)
 
 # specify what you want the target names to contain - otherwise will also get red, green, yellow slice nodes
-targetNameContains = "_Glenoid"   
+targetNameContains = "_Scapula"   
 clean(targetNameContains)
+
