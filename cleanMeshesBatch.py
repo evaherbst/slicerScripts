@@ -9,8 +9,6 @@ def clean(targetNameContains):
     # Initialize SurfaceToolbox logic
     logic = SurfaceToolbox.SurfaceToolboxLogic()
 
-    slicer.app.setRenderPaused(True)  # Disable real-time rendering until finished
-
     # Get the number of model nodes
     number_of_model_nodes = slicer.mrmlScene.GetNumberOfNodesByClass('vtkMRMLModelNode')
 
@@ -20,6 +18,8 @@ def clean(targetNameContains):
         model = slicer.mrmlScene.GetNthNodeByClass(i, 'vtkMRMLModelNode')
         # Skip if "Scapula" is not in the model node name
         if targetNameContains not in model.GetName():
+            continue
+        if targetNameCannotContain in model.GetName():
             continue
 
         print ("found model called " + model.GetName())
@@ -39,8 +39,11 @@ def clean(targetNameContains):
             flip=False, 
             split=False, 
             splitAngle=30.0)
+        
+        slicer.app.processEvents()  # Process pending UI updates
 
 # specify what you want the target names to contain - otherwise will also get red, green, yellow slice nodes
-targetNameContains = "_Scapula"   
+targetNameContains = "Glenoid"   # add and does not contain CC 
+targetNameCannotContain = "CC"
 clean(targetNameContains)
 
