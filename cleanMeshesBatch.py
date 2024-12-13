@@ -30,7 +30,7 @@ def clean(targetNameContains):
             inputModel=model,
             outputModel=model
         )
-         
+        if updateNormals == "True":
         # update normals
         logic.computeNormals(
             inputModel=model, 
@@ -45,5 +45,6 @@ def clean(targetNameContains):
 # specify what you want the target names to contain - otherwise will also get red, green, yellow slice nodes
 targetNameContains = "Glenoid"   # add and does not contain CC 
 targetNameCannotContain = "CC"
-clean(targetNameContains)
+updateNormals = "False" # set update normals to false as default, since it can cause issues with curvecut generated outputs
+clean(targetNameContains,updateNormals)
 
